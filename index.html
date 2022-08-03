@@ -1,0 +1,543 @@
+<html class="js-focus-visible">
+
+<head>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="author" content="Kewal" />
+  <script type="module" src="https://unpkg.com/@google/model-viewer@1.12.0/dist/model-viewer.js"></script>
+  <script nomodule="" src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script>
+  <script src="https://remove-focus-visible-polyfill.s3.us-east-2.amazonaws.com/focus-visible.js"></script>
+  <link rel="stylesheet" href="style.css">
+
+  <script>
+    const idelAnimation = {
+      modelAnim:"idle"
+    }
+
+    const waveAnimation = {
+      modelAnim:"wavefinal"
+    }
+
+    const lookLeftAnimation = {
+      modelAnim:"lookleft"
+    }
+
+    const lookRightAnimation = {
+      modelAnim:"lookright"
+    }
+
+
+    //thumbsup , throwup, carry, projects, skills
+    const EducationObject = {
+      text: "EducationText",
+      slotName: 'hotspot-education',
+      initialPosition: "0 30 0.1",
+      activePosition: "0 28 0.1",
+      button: "EducationButton",
+      initialWidth: "50px",
+      activeWidth: "100px",
+      activeAnim: "EducationAnim",
+      img: "EducationImg",
+      modelAnim: "throwup",
+      infoDivId: "EducationDiv",
+      loopAnim: true
+    }
+
+    const SkillsObject = {
+      text: "SkillsText",
+      slotName: 'hotspot-skills',
+      initialPosition: "-10 22 0.1",
+      activePosition: "0 26.5 0.1",
+      button: "SkillsButton",
+      initialWidth: "50px",
+      activeWidth: "70px",
+      activeAnim: "SkillsAnim",
+      img: "SkillsImg",
+      modelAnim: "skills",
+      infoDivId: "SkillsDiv",
+      loopAnim: true
+    }
+
+    const ExperienceObject = {
+      text: "ExperienceText",
+      slotName: 'hotspot-experience',
+      initialPosition: "-10 12 0.1",
+      activePosition: "-6 8 0.1",
+      button: "ExperienceButton",
+      initialWidth: "50px",
+      activeWidth: "150px",
+      activeAnim: "ExperienceAnim",
+      img: "ExperienceImg",
+      modelAnim: "carry",
+      infoDivId: "ExperienceDiv",
+      loopAnim: true
+    }
+
+    const ProjectsObject = {
+      text: "ProjectsText",
+      slotName: 'hotspot-projects',
+      initialPosition: "10 22 0.1",
+      activePosition: "0 18 0.1",
+      button: "ProjectsButton",
+      initialWidth: "50px",
+      activeWidth: "100px",
+      activeAnim: "PojectsAnim",
+      img: "ProjectsImg",
+      modelAnim: "projects",
+      infoDivId: "ProjectsDiv",
+      loopAnim: true
+    }
+
+    const ConnectObject = {
+      text: "ConnectText",
+      slotName: 'hotspot-connect',
+      initialPosition: "10 12 0.1",
+      activePosition: "5 18 0.1",
+      button: "ConnectButton",
+      initialWidth: "50px",
+      activeWidth: "100px",
+      activeAnim: "ConnectAnim",
+      img: "ConnectImg",
+      modelAnim: "thumbsup",
+      infoDivId: "ConnectDiv",
+      loopAnim: false
+    }
+
+    const InfoType = {
+      Education: EducationObject,
+      Skills: SkillsObject,
+      Experience: ExperienceObject,
+      Projects: ProjectsObject,
+      Connect: ConnectObject
+    };
+
+    function TriggerOption(info) {
+
+      resetOption();
+      makeAllOptionsInvisible()
+      document.getElementById(info.button).style.display = "block";
+      document.getElementById(info.text).style.visibility = "hidden";
+      document.getElementById(info.button).style.width = info.activeWidth;
+      document.getElementById(info.img).classList.add(info.activeAnim);
+      document.getElementById("backButton").style.display = "block";
+      updateHotspotLocation(info.slotName, info.activePosition);
+      triggerMeAnimation(info, info.loopAnim);
+      changeAnnotationDisplayInline(info.infoDivId);
+     
+    }
+
+
+    async function triggerMeAnimation(info, loop, count = 1) {
+      let modelViewer = document.querySelector("#desk");
+      modelViewer.animationName = info.modelAnim;
+      await modelViewer.updateComplete;
+      if (loop) {
+        modelViewer.play();
+      }
+      else {
+        modelViewer.play({ repetitions: count });
+      }
+    }
+
+    function makeAllOptionsInvisible() {
+      const infoObjects = [EducationObject, SkillsObject, ExperienceObject, ProjectsObject, ConnectObject];
+      for (var i = 0; i < infoObjects.length; i++) {
+        document.getElementById(infoObjects[i].button).style.display = "none";
+      }
+    }
+
+    function resetOption() {
+
+      let modelViewer = document.querySelector("#desk");
+      modelViewer.animationName = "idle";
+      document.getElementById("backButton").style.display = "none";
+      changeAnnotationDisplayNone("MyselfDiv");
+      const infoObjects = [EducationObject, SkillsObject, ExperienceObject, ProjectsObject, ConnectObject];
+      for (var i = 0; i < infoObjects.length; i++) {
+        document.getElementById(infoObjects[i].button).style.display = "block";
+        document.getElementById(infoObjects[i].text).style.visibility = "visible";
+        document.getElementById(infoObjects[i].button).style.width = infoObjects[i].initialWidth;
+        document.getElementById(infoObjects[i].img).classList.remove(infoObjects[i].activeAnim);
+        updateHotspotLocation(infoObjects[i].slotName, infoObjects[i].initialPosition);
+        changeAnnotationDisplayNone(infoObjects[i].infoDivId);
+      }
+    }
+
+    function showMyself() {
+      resetOption();
+      makeAllOptionsInvisible();
+      document.getElementById("backButton").style.display = "block";
+      changeAnnotationDisplayInline("MyselfDiv");
+    }
+
+    function updateHotspotLocation(hotspotName, hotspotLocation) {
+      let modelViewer = document.querySelector("#desk");
+      modelViewer.updateHotspot({
+        name: hotspotName,
+        position: hotspotLocation
+      });
+    }
+
+    function changeAnnotationDisplayInline(id) {
+      let modelViewer = document.querySelector('#' + id);
+      modelViewer.style.display = "inline";
+    }
+
+    function changeAnnotationDisplayNone(id) {
+      let modelViewer = document.querySelector('#' + id);
+      modelViewer.style.display = "none";
+    }
+
+    function makeAllOptionsInvisible() {
+      const infoObjects = [EducationObject, SkillsObject, ExperienceObject, ProjectsObject, ConnectObject];
+      for (var i = 0; i < infoObjects.length; i++) {
+        document.getElementById(infoObjects[i].button).style.display = "none";
+      }
+    }
+
+    function makeAllOptionsVisible() {
+      const infoObjects = [EducationObject, SkillsObject, ExperienceObject, ProjectsObject, ConnectObject];
+      for (var i = 0; i < infoObjects.length; i++) {
+        document.getElementById(infoObjects[i].button).style.display = "inline";
+      }
+    }
+
+    function isMobile() {
+    ///<summary>Detecting whether the browser is a mobile browser or desktop browser</summary>
+    ///<returns>A boolean value indicating whether the browser is a mobile browser or not</returns>
+
+    if (sessionStorage.desktop) // desktop storage 
+        return false;
+    else if (localStorage.mobile) // mobile storage
+        return true;
+
+    // alternative
+    var mobile = ['iphone','ipad','android','blackberry','nokia','opera mini','windows mobile','windows phone','iemobile']; 
+    for (var i in mobile) if (navigator.userAgent.toLowerCase().indexOf(mobile[i].toLowerCase()) > 0) return true;
+
+    // nothing found.. assume desktop
+    return false;
+}
+      
+let myTimer = setInterval(adjustModel, 1000);
+
+function adjustModel() {
+      if(!isMobile()){
+         var modelViewern = document.querySelector("#desk");
+         modelViewern.cameraTarget="0.25m 20m 1.299m";
+      }
+      makeAllOptionsVisible();
+      triggerMainScreenAnim();
+      
+      clearInterval(myTimer);
+}
+     function triggerMainScreenAnim() {
+      var modelViewer = document.querySelector("#desk");
+      modelViewer.addEventListener('finished', play);
+      triggerMeAnimation(waveAnimation,false, 2);
+     } 
+
+     function play(){
+      var modelViewer = document.querySelector("#desk");
+      if(modelViewer.animationName == "wavefinal" ){
+        triggerMeAnimation(idelAnimation,true);
+      }
+     }
+  </script>
+</head>
+
+<body>
+ 
+  <model-viewer id="desk" src="models/resumetest.glb"
+    poster="UI/poster.png"
+    alt="KEWAL IMPOSTER" ar-modes="webxr scene-viewer quick-look" shadow-intensity="1" camera-controls auto-rotate
+    animation-name="idle" ar>
+    <div id="titleText" onclick="showMyself()">
+      KEWAL KISHAN G
+    </div>
+
+    <button id="backButton" onclick="resetOption()">
+      <img class="categoryImg" src="UI/back.png" />
+    </button>
+
+    <button id="EducationButton" class="Hotspot" slot="hotspot-education" data-position="0 30 0.1"
+      data-normal="-0.73 0.05 0.69" onclick="TriggerOption(InfoType.Education)" style="display: none;">
+      <img id="EducationImg" class="categoryImg" src="UI/education.png" />
+      <div id="EducationText" class="categoryText">Education</div>
+    </button>
+
+    <button id="SkillsButton" class="Hotspot" slot="hotspot-skills" data-position="-10 22 0.1"
+      data-normal="-0.73 0.05 0.69" onclick="TriggerOption(InfoType.Skills)" style="display: none;">
+      <img id="SkillsImg" class="categoryImg" src="UI/skills.png" />
+      <div id="SkillsText" class="categoryText">Skills</div>
+    </button>
+
+    <button id="ExperienceButton" class="Hotspot" slot="hotspot-experience" data-position="-10 12 1"
+      data-normal="-0.73 0.05 0.69" onclick="TriggerOption(InfoType.Experience)" style="display: none;">
+      <img id="ExperienceImg" class="categoryImg" src="UI/experience.png" />
+      <div id="ExperienceText" class="categoryText">Experience</div>
+    </button>
+
+    <button id="ProjectsButton" class="Hotspot" slot="hotspot-projects" data-position="10 22 -1"
+      data-normal="-0.73 0.05 0.69" onclick="TriggerOption(InfoType.Projects)" style="display: none;">
+      <img id="ProjectsImg" class="categoryImg" src="UI/project.png" />
+      <div id="ProjectsText" class="categoryText">Projects</div>
+    </button>
+
+    <button id="ConnectButton" class="Hotspot" slot="hotspot-connect" data-position="10 12 1" data-normal="0.73 5 0.69"
+      onclick="TriggerOption(InfoType.Connect)" style="display: none;">
+      <img id="ConnectImg" class="categoryImg" src="UI/contact.png" />
+      <div id="ConnectText" class="categoryText">Connect</div>
+    </button>
+
+    <!-- This is where contacts is going -->
+    <div id="ConnectDiv" class="Hotspot" slot="hotspot-connect-options" data-position="10 17 1"
+      data-normal="0.73 5 0.69" style="display: none;">
+      <a href="https://www.linkedin.com/in/kewalkishang/" target="_blank">
+        <button id="LinkedInButton" style="padding: 10px;">
+          <img class="categoryImg" src="UI/IinkedIn.png" />
+        </button>
+      </a>
+
+      <a href="https://github.com/kewalkishang/" target="_blank">
+        <button id="GithubButton" style="padding: 10px;">
+          <img class="categoryImg" src="UI/github.png" />
+        </button>
+      </a>
+
+
+      <a href="https://play.google.com/store/apps/developer?id=OnlyKK" target="_blank">
+        <button id="GooglePlayButton" style="padding: 10px;">
+          <img class="categoryImg" src="UI/playstore.png" />
+        </button>
+      </a>
+
+      <a href="mailto:kewalkishang@gmail.com" target="_blank">
+        <button id="GmailButton" style="padding: 10px;">
+          <img class="categoryImg" src="UI/mail.png" />
+        </button>
+      </a>
+      <a href="https://sketchfab.com/kewalkishang" target="_blank">
+        <button id="SketchFabButton" style="padding: 10px;">
+          <img class="categoryImg" src="UI/sketchfab.png" />
+        </button>
+      </a>
+    </div>
+
+    <!-- SKILLS -->
+    <div id="SkillsDiv" class="Hotspot" slot="hotspot-skills-list" data-position="-1 30 0" data-normal="0 0 0"
+      style="display: none;">
+
+      <div class="skillAnnotation" style="position: absolute; top: 80px; left : 120px;">Angular</div>
+      <div class="skillAnnotation" style="position: absolute; top: 80px; right : 80px;">HTML</div>
+      <div class="skillAnnotation" style="position: absolute; top: 80px; left : 0px;">JavaScript</div>
+      <div class="skillAnnotation" style="position: absolute; top: 160px; left : 0px;">Java</div>
+      <div class="skillAnnotation" style="position: absolute; top: 160px; left : 120px;">Photoshop</div>
+      <div class="skillAnnotation" style="position: absolute; top: 160px; right : 80px;">Blender</div>
+      <div class="skillAnnotation" style="position: absolute; top: 240px; left : 120px;">ARCore</div>
+      <div class="skillAnnotation" style="position: absolute; top: 240px; left : 0px;">Threejs</div>
+      <div class="skillAnnotation" style="position: absolute; top: 240px; right : 80px;">Android Studio</div>
+      <div class="skillAnnotation" style="position: absolute; top: 320px; left : 120px;">XCode</div>
+      <div class="skillAnnotation" style="position: absolute; top: 320px; left : 0px;">Unity</div>
+      <div class="skillAnnotation" style="position: absolute; top: 320px; right : 80px;">Python</div>
+    </div>
+
+    <!-- Education list  -->
+    <div id="EducationDiv" class="Hotspot" slot="hotspot-education-list" data-position="0 15 0" data-normal="0 0 0"  style="display: none;">
+      <div class="scroll" style="background-color:  rgba(255, 255, 255, .5); padding: 20px; border-radius: 20px; ">
+        <ul>
+          <li>
+            <div>
+              <p>
+                <b>BACHELOR OF ENGINEERING </b> | Computer Science and
+                Engineering
+              </p>
+              <p>Visvesvaraya Technological University, India | 2013- 2017</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <p>
+                <b>HIGHER SECONDARY SCHOOL CERTIFICATE</b> | Computer Science
+                and Engineering
+              </p>
+              <p>Kendriya Vidyalaya, India (CBSE) | 2012 - 2013</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <p>
+                <b>SECONDARY SCHOOL CERTIFICATE</b> | Computer Science and
+                Engineering
+              </p>
+              <p>Kendriya Vidyalaya, India (CBSE) | 2010 - 2011</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Experience here -->
+    <div id="ExperienceDiv" class="Hotspot" slot="hotspot-experience-list" data-position="0 15 0" data-normal="0 0 0"  style="display: none;">
+      <div class="scroll" style="background-color: rgba(255, 255, 255, .5); padding: 20px; border-radius: 20px;">
+        <ul >
+                 <li>
+            <div>
+              <p>
+                <b>
+Software engineer II</b> | Cambridge Mobile Telematics , India
+              </p>
+              <p>JUN' 21 - PRESENT</p>
+              <p>A mobile dev for the driveScape team.</p>
+            </div>
+          </li>
+         
+          <li>
+            <div>
+              <p>
+                <b>Associate</b> | Cognizant , India
+              </p>
+              <p>DEC' 17 - JUN' 21</p>
+              <p>A POS(top layer of the freshers) part of the technology vertical, responsible for - <br>
+- Developing immersive(AR/VR) applications. <br>
+- building applications on upcoming machine learning models.</p>
+            </div>
+          </li>
+               <li>
+            <div>
+              <p>
+                <b>Unity Intern</b> | Absentia Virtual Reality , India
+              </p>
+              <p>JUL' 17 - DEC' 17</p>
+              <p>Interned as a Unity game developer for a sniper game, I had the opportunity to - <br>
+- work on game design and graphics.<br>
+- write game functionality. <br>
+- create cut-scenes </p>
+            </div>
+          </li>
+             <li>
+            <div>
+              <p>
+                <b>Unity Intern</b> | Mimyk , India
+              </p>
+              <p>Feb' 17 - Apr' 17 </p>
+              <p>Unity intern at a spin-off from IISC, working on an endoscopy simulator -<br>
+- responsible for developing exercise framework and gamification <br>
+- creating shaders for realistic graphical simulation <br>
+- write plugins to integrate hardware</p>
+            </div>
+          </li>
+                <li>
+            <div>
+              <p>
+                <b>Unity Intern</b> | Absentia Virtual Reality , India
+              </p>
+              <p>Apr' 16 - Jan' 17 </p>
+              <p>UNITY intern, working on Augmented and Virtual reality application, my responsibility included - <br>
+- Creating immersive shopping and advertising experiences. <br>
+- Design and implement VR entertainment solutions. <br>
+- Develop AR based educational applications. <br>
+- Testing and validating packages for various use cases  </p>
+            </div>
+          </li>
+         
+        </ul>
+      </div>
+    </div> 
+
+    <!-- Projects here -->
+    <div id="ProjectsDiv" class="Hotspot" slot="hotspot-projects-list" data-position="0 15 0" data-normal="0 0 0"  style="display: none;">
+      <div class="scroll" style="background-color: rgba(255, 255, 255, .5); padding: 20px; border-radius: 20px;">
+        <ul >
+          <li>
+            <div>
+              <p>
+                <b>Furniture Store</b> | <a href="https://github.com/kewalkishang/AR-FurnitureStore" target="_blank">GitHub</a>
+              </p>
+              <p>AR solution for online purchasing of furniture. Facilitates anchoring 3D
+objects to real world and manipulate them, for a personalized experience</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <p>
+                <b>ArVA</b> | <a href="https://www.linkedin.com/posts/kewalkishang_augmentedreality-chatbots-artificialintelligence-activity-6487343493994897409-T_Zp?utm_source=linkedin_share&utm_medium=member_desktop_web" target="_blank">Demo</a>
+              </p>
+              <p>an AR based chatbot, integrated with google DialogFlow that simulates a
+ humanoid virtual assistant that responds using actions and speech.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <p>
+                <b>ArGO</b> | <a href="https://play.google.com/store/apps/details?id=com.OnlyKK.ARgo" target="_blank">Play Store</a>
+              </p>
+              <p>an AR based building construction application developed for early prototyping. </p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <p>
+                <b>VR SUITE</b> | <a href="https://play.google.com/store/apps/details?id=com.OnlyKK.BALLBALANCE" target="_blank">Play Store</a>
+              </p>
+              <p>An immersive VR game room with multiple arcade games,(Zombie attack, ball
+ balancing, Shape creation) designed to be played with a google cardboard.</p>
+            </div>
+          </li>
+         
+               <li>
+            <div>
+              <p>
+                <b>Train Simulator</b>
+              </p>
+              <p>a realistic metro simulator built to train metro drivers.</p>
+            </div>
+          </li>
+          
+             <li>
+            <div>
+              <p>
+                <b>Customer Behavior Recognition in Retail Store from Surveillance Camera</b>
+              </p>
+              <p>Successfully developed and implemented a machine learning model that can recognize and
+differentiate different human activities in a retail store for product or anomaly analysis</p>
+            </div>
+          </li>
+           <li>
+            <div>
+              <p>
+                <b>Geometry3D</b> | <a href="https://play.google.com/store/apps/details?id=com.onlykk.geometry3d" target="_blank">Play Store</a> , <a href="https://www.linkedin.com/posts/kewalkishang_education-unity3d-augmentedreality-activity-6702256660037156864-YVn3?utm_source=linkedin_share&utm_medium=member_desktop_web" target="_blank">Demo</a> 
+              </p>
+              <p>Successfully developed and implemented a machine learning model that can recognize and
+differentiate different human activities in a retail store for product or anomaly analysis</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div> 
+
+     <!-- Myself  -->
+     <div id="MyselfDiv" class="Hotspot" slot="hotspot-projects-list" data-position="0 15 0" data-normal="0 0 0"  style="display: none;">
+       <div class="scroll" style="background-color: rgba(255, 255, 255, .5); padding: 20px; border-radius: 20px;">
+       <p>
+         Hey! I am Kewal.
+       </p>
+         <p>
+         A software engineer from India.
+       </p>
+          
+          <p>
+       XR/Metaverse enthusiast.
+       </p>
+         <p>
+         A hobby game developer. 
+       </p>
+          <p>
+         A Noob surfer and advanced scuba diver. 
+       </p>
+       </div>
+    </div>
+  </model-viewer>
+</body>
+
+</html>

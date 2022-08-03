@@ -1,0 +1,240 @@
+model-viewer {
+  width: 100%;
+  height: 100%;
+  outline: none;
+  margin: 0;
+  --poster-color: #fff;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+#titleText {
+  position: absolute;
+  top: 5%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  width: 100%;
+  font-size: 6vw;
+  font-weight: bold;
+  font-family: fantasy;
+}
+
+#backButton {
+  position: absolute;
+  top: 5%;
+  left: 1%;
+  width: 50px;
+  display: none;
+}
+
+/* This keeps child nodes hidden while the element loads */
+:not(:defined)>* {
+  display: none;
+}
+
+button {
+  display: block;
+  width: 50px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  box-sizing: border-box;
+  text-align: center;
+
+}
+
+.SkillsAnim {
+  animation-name: rotateSkills;
+  animation-duration: 2s;
+  animation-delay: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.ExperienceAnim {
+  animation-name: swayExperience;
+  animation-duration: 2s;
+  animation-delay: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.ConnectAnim {
+  animation-name: wiggle;
+  animation-duration: 1.5s;
+  animation-delay: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.PojectsAnim {
+  animation-name: pumpPojects;
+  animation-duration: 1.5s;
+  animation-delay: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.EducationAnim {
+  animation-name: throwCap;
+  animation-duration: 1.5s;
+  animation-delay: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.categoryText {
+  font-size: large;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hiddenAnnotation {
+  display: none;
+}
+
+.categoryImg {
+
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+/* button[slot="hotspot-hand"]{
+  --min-hotspot-opacity: 0;
+  background-color: red;
+} */
+@keyframes rotateSkills {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes swayExperience {
+  0% {
+    transform: rotate(0);
+  }
+
+  50% {
+    transform: rotate(20deg);
+  }
+
+  100% {
+    transform: rotate(-20deg);
+  }
+}
+
+@keyframes pumpPojects {
+  0% {
+    transform: scale(1.0);
+  }
+
+  50% {
+    transform: scale(1.3);
+  }
+
+  100% {
+    transform: scale(1.0);
+  }
+}
+
+@keyframes throwCap {
+  0% {
+    transform: translateY(0em);
+  }
+
+  25% {
+    transform: translateY(-2em) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-4em);
+  }
+
+  75% {
+    transform: translateY(-2em) rotate(-360deg);
+  }
+
+  100% {
+    transform: translateY(0em) rotate(-360deg);
+  }
+}
+
+@keyframes wiggle {
+
+  0%,
+  7% {
+    transform: rotateZ(0);
+  }
+
+  15% {
+    transform: rotateZ(-15deg);
+  }
+
+  20% {
+    transform: rotateZ(10deg);
+  }
+
+  25% {
+    transform: rotateZ(-10deg);
+  }
+
+  30% {
+    transform: rotateZ(6deg);
+  }
+
+  35% {
+    transform: rotateZ(-4deg);
+  }
+
+  40%,
+  100% {
+    transform: rotateZ(0);
+  }
+}
+
+.skillAnnotation {
+  background: white;
+  border-radius: 25px;
+  padding: 5px;
+  font-weight: bold;
+}
+
+#parent {
+  background-color: white;
+  border-radius: 25px
+}
+
+#closeButton {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+#switchButton {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+  width: 200px;
+  bottom: 10px;
+}
+
+div.scroll {
+  overflow-y: scroll;
+  max-height: 300px;
+}
+
+p {
+  font-family: sans-serif;
+  font-weight: semi-bold;
+}
