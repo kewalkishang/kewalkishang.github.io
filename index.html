@@ -15,7 +15,7 @@
     }
 
     const waveAnimation = {
-      modelAnim:"wavefinal"
+      modelAnim:"wavehi"
     }
 
     const lookLeftAnimation = {
@@ -31,8 +31,8 @@
     const EducationObject = {
       text: "EducationText",
       slotName: 'hotspot-education',
-      initialPosition: "0 30 0.1",
-      activePosition: "0 28 0.1",
+      initialPosition: "0 1.7 0",
+      activePosition: "0 1.6 -0.05",
       button: "EducationButton",
       initialWidth: "50px",
       activeWidth: "100px",
@@ -46,8 +46,8 @@
     const SkillsObject = {
       text: "SkillsText",
       slotName: 'hotspot-skills',
-      initialPosition: "-10 22 0.1",
-      activePosition: "0 26.5 0.1",
+      initialPosition: "-0.4 1.2 0",
+      activePosition: "0 1.55 0",
       button: "SkillsButton",
       initialWidth: "50px",
       activeWidth: "70px",
@@ -61,8 +61,8 @@
     const ExperienceObject = {
       text: "ExperienceText",
       slotName: 'hotspot-experience',
-      initialPosition: "-10 12 0.1",
-      activePosition: "-6 8 0.1",
+      initialPosition: "-0.4 0.7 0",
+      activePosition: "-0.25 0.4 -0.2",
       button: "ExperienceButton",
       initialWidth: "50px",
       activeWidth: "150px",
@@ -76,8 +76,8 @@
     const ProjectsObject = {
       text: "ProjectsText",
       slotName: 'hotspot-projects',
-      initialPosition: "10 22 0.1",
-      activePosition: "0 18 0.1",
+      initialPosition: "0.4 1.2 -0.1",
+      activePosition: "0 1 -0.1",
       button: "ProjectsButton",
       initialWidth: "50px",
       activeWidth: "100px",
@@ -91,8 +91,8 @@
     const ConnectObject = {
       text: "ConnectText",
       slotName: 'hotspot-connect',
-      initialPosition: "10 12 0.1",
-      activePosition: "5 18 0.1",
+      initialPosition: "0.4 0.7 0",
+      activePosition: "0.25 1 0.1",
       button: "ConnectButton",
       initialWidth: "50px",
       activeWidth: "100px",
@@ -224,7 +224,9 @@ let myTimer = setInterval(adjustModel, 1000);
 function adjustModel() {
       if(!isMobile()){
          var modelViewern = document.querySelector("#desk");
-         modelViewern.cameraTarget="0.25m 20m 1.299m";
+         modelViewern.minFieldOfView = "20deg";
+         modelViewern.minFieldOfView = "30deg";
+        
       }
       makeAllOptionsVisible();
       triggerMainScreenAnim();
@@ -239,7 +241,7 @@ function adjustModel() {
 
      function play(){
       var modelViewer = document.querySelector("#desk");
-      if(modelViewer.animationName == "wavefinal" ){
+      if(modelViewer.animationName == "wavehi" ){
         triggerMeAnimation(idelAnimation,true);
       }
      }
@@ -248,10 +250,10 @@ function adjustModel() {
 
 <body>
  
-  <model-viewer id="desk" src="models/resumetest.glb"
+  <model-viewer id="desk" src="models/resumemodel.glb"
     poster="UI/poster.png"
     alt="KEWAL IMPOSTER" ar-modes="webxr scene-viewer quick-look" shadow-intensity="1" camera-controls auto-rotate
-    animation-name="idle" ar>
+    animation-name="idle" min-field-of-view="75deg" max-field-of-view="100deg">
     <div id="titleText" onclick="showMyself()">
       KEWAL KISHAN G
     </div>
@@ -260,38 +262,38 @@ function adjustModel() {
       <img class="categoryImg" src="UI/back.png" />
     </button>
 
-    <button id="EducationButton" class="Hotspot" slot="hotspot-education" data-position="0 30 0.1"
-      data-normal="-0.73 0.05 0.69" onclick="TriggerOption(InfoType.Education)" style="display: none;">
+    <button id="EducationButton" class="Hotspot" slot="hotspot-education" data-position="0 1.7 0"
+      data-normal="-0.73 0.05 0.69" onclick="TriggerOption(InfoType.Education)">
       <img id="EducationImg" class="categoryImg" src="UI/education.png" />
       <div id="EducationText" class="categoryText">Education</div>
     </button>
 
-    <button id="SkillsButton" class="Hotspot" slot="hotspot-skills" data-position="-10 22 0.1"
+    <button id="SkillsButton" class="Hotspot" slot="hotspot-skills" data-position="-0.4 1.2 0"
       data-normal="-0.73 0.05 0.69" onclick="TriggerOption(InfoType.Skills)" style="display: none;">
       <img id="SkillsImg" class="categoryImg" src="UI/skills.png" />
       <div id="SkillsText" class="categoryText">Skills</div>
     </button>
 
-    <button id="ExperienceButton" class="Hotspot" slot="hotspot-experience" data-position="-10 12 1"
+    <button id="ExperienceButton" class="Hotspot" slot="hotspot-experience" data-position="-0.4 0.7 0"
       data-normal="-0.73 0.05 0.69" onclick="TriggerOption(InfoType.Experience)" style="display: none;">
       <img id="ExperienceImg" class="categoryImg" src="UI/experience.png" />
       <div id="ExperienceText" class="categoryText">Experience</div>
     </button>
 
-    <button id="ProjectsButton" class="Hotspot" slot="hotspot-projects" data-position="10 22 -1"
+    <button id="ProjectsButton" class="Hotspot" slot="hotspot-projects" data-position="0.4 1.2 0"
       data-normal="-0.73 0.05 0.69" onclick="TriggerOption(InfoType.Projects)" style="display: none;">
       <img id="ProjectsImg" class="categoryImg" src="UI/project.png" />
       <div id="ProjectsText" class="categoryText">Projects</div>
     </button>
 
-    <button id="ConnectButton" class="Hotspot" slot="hotspot-connect" data-position="10 12 1" data-normal="0.73 5 0.69"
+    <button id="ConnectButton" class="Hotspot" slot="hotspot-connect" data-position="0.4 0.7 0" data-normal="0.73 5 0.69"
       onclick="TriggerOption(InfoType.Connect)" style="display: none;">
       <img id="ConnectImg" class="categoryImg" src="UI/contact.png" />
       <div id="ConnectText" class="categoryText">Connect</div>
     </button>
 
     <!-- This is where contacts is going -->
-    <div id="ConnectDiv" class="Hotspot" slot="hotspot-connect-options" data-position="10 17 1"
+    <div id="ConnectDiv" class="Hotspot" slot="hotspot-connect-options" data-position="0.5 1.1 -0.1"
       data-normal="0.73 5 0.69" style="display: none;">
       <a href="https://www.linkedin.com/in/kewalkishang/" target="_blank">
         <button id="LinkedInButton" style="padding: 10px;">
@@ -325,25 +327,25 @@ function adjustModel() {
     </div>
 
     <!-- SKILLS -->
-    <div id="SkillsDiv" class="Hotspot" slot="hotspot-skills-list" data-position="-1 30 0" data-normal="0 0 0"
+    <div id="SkillsDiv" class="Hotspot" slot="hotspot-skills-list" data-position="0 1.7 0" data-normal="0 0 0"
       style="display: none;">
 
-      <div class="skillAnnotation" style="position: absolute; top: 80px; left : 120px;">Angular</div>
-      <div class="skillAnnotation" style="position: absolute; top: 80px; right : 80px;">HTML</div>
+      <div class="skillAnnotation" style="position: absolute; top: 80px; left : 110px;">Angular</div>
+      <div class="skillAnnotation" style="position: absolute; top: 80px; right : 70px;">HTML</div>
       <div class="skillAnnotation" style="position: absolute; top: 80px; left : 0px;">JavaScript</div>
       <div class="skillAnnotation" style="position: absolute; top: 160px; left : 0px;">Java</div>
-      <div class="skillAnnotation" style="position: absolute; top: 160px; left : 120px;">Photoshop</div>
-      <div class="skillAnnotation" style="position: absolute; top: 160px; right : 80px;">Blender</div>
-      <div class="skillAnnotation" style="position: absolute; top: 240px; left : 120px;">ARCore</div>
+      <div class="skillAnnotation" style="position: absolute; top: 160px; left : 110px;">Photoshop</div>
+      <div class="skillAnnotation" style="position: absolute; top: 160px; right : 70px;">Blender</div>
+      <div class="skillAnnotation" style="position: absolute; top: 240px; left : 110px;">ARCore</div>
       <div class="skillAnnotation" style="position: absolute; top: 240px; left : 0px;">Threejs</div>
-      <div class="skillAnnotation" style="position: absolute; top: 240px; right : 80px;">Android Studio</div>
-      <div class="skillAnnotation" style="position: absolute; top: 320px; left : 120px;">XCode</div>
+      <div class="skillAnnotation" style="position: absolute; top: 240px; right : 70px;">Android Studio</div>
+      <div class="skillAnnotation" style="position: absolute; top: 320px; left : 110px;">XCode</div>
       <div class="skillAnnotation" style="position: absolute; top: 320px; left : 0px;">Unity</div>
-      <div class="skillAnnotation" style="position: absolute; top: 320px; right : 80px;">Python</div>
+      <div class="skillAnnotation" style="position: absolute; top: 320px; right : 70px;">Python</div>
     </div>
 
     <!-- Education list  -->
-    <div id="EducationDiv" class="Hotspot" slot="hotspot-education-list" data-position="0 15 0" data-normal="0 0 0"  style="display: none;">
+    <div id="EducationDiv" class="Hotspot" slot="hotspot-education-list" data-position="0 0.8 0" data-normal="0 0 0"  style="display: none;">
       <div class="scroll" style="background-color:  rgba(255, 255, 255, .5); padding: 20px; border-radius: 20px; ">
         <ul>
           <li>
@@ -378,7 +380,7 @@ function adjustModel() {
     </div>
 
     <!-- Experience here -->
-    <div id="ExperienceDiv" class="Hotspot" slot="hotspot-experience-list" data-position="0 15 0" data-normal="0 0 0"  style="display: none;">
+    <div id="ExperienceDiv" class="Hotspot" slot="hotspot-experience-list" data-position="0 0.8 0" data-normal="0 0 0"  style="display: none;">
       <div class="scroll" style="background-color: rgba(255, 255, 255, .5); padding: 20px; border-radius: 20px;">
         <ul >
                  <li>
@@ -446,7 +448,7 @@ Software engineer II</b> | Cambridge Mobile Telematics , India
     </div> 
 
     <!-- Projects here -->
-    <div id="ProjectsDiv" class="Hotspot" slot="hotspot-projects-list" data-position="0 15 0" data-normal="0 0 0"  style="display: none;">
+    <div id="ProjectsDiv" class="Hotspot" slot="hotspot-projects-list" data-position="0 0.8 0" data-normal="0 0 0"  style="display: none;">
       <div class="scroll" style="background-color: rgba(255, 255, 255, .5); padding: 20px; border-radius: 20px;">
         <ul >
           <li>
