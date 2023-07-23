@@ -230,9 +230,9 @@
       }
       makeAllOptionsVisible();
       triggerMainScreenAnim();
-
       clearInterval(myTimer);
     }
+    
     function triggerMainScreenAnim() {
       var modelViewer = document.querySelector("#desk");
       modelViewer.addEventListener('finished', play);
@@ -245,6 +245,8 @@
         triggerMeAnimation(idelAnimation, true);
       }
     }
+
+  
   </script>
 </head>
 
@@ -262,7 +264,7 @@
     </button>
 
     <button id="EducationButton" class="Hotspot" slot="hotspot-education" data-position="0 1.8 0"
-      data-normal="-0.73 0.05 0.69" onclick="TriggerOption(InfoType.Education)">
+      data-normal="-0.73 0.05 0.69" onclick="TriggerOption(InfoType.Education)" style="display: none;">
       <img id="EducationImg" class="categoryImg" src="UI/education.png" />
       <div id="EducationText" class="categoryText">Education</div>
     </button>
@@ -513,7 +515,34 @@
           <li>
             <div>
               <p>
-                <b>Furniture Store</b> | <a href="https://github.com/kewalkishang/AR-FurnitureStore"
+                <b>UML generator</b> | C#, Unity | <a href="https://github.com/kewalkishang/Unity-UML-Generator"
+                  target="_blank">GitHub</a>
+              </p>
+              <p>C# tool that automates the generation of comprehensive class diagrams and performs in-depth analysis of dependencies among them.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <p>
+                <b>Wander Work</b> | React Native, Firebase, Google Maps
+              </p>
+              <p>Cross Platform mobile app to find, add and review workplaces, utilizes firebase for auth and storage and Google maps API for seamless navigation.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <p>
+                <b>Aframe Components</b> | JavaScript, Three.js | <a href="https://github.com/kewalkishang/aframe-wave-component"
+                  target="_blank">Wave Component</a> | <a href="https://github.com/kewalkishang/aframe-clock-component"
+                  target="_blank">Clock Component</a>
+              </p>
+              <p>Reusable components to be used in WebVR scenes.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <p>
+                <b>Furniture Store</b> | Unity, ARCore | <a href="https://github.com/kewalkishang/AR-FurnitureStore"
                   target="_blank">GitHub</a>
               </p>
               <p>AR solution for online purchasing of furniture. Facilitates anchoring 3D
@@ -523,27 +552,27 @@
           <li>
             <div>
               <p>
-                <b>ArVA</b> | <a
+                <b>ArVA</b> | Unity, ARCore, DialogFlow | <a
                   href="https://www.linkedin.com/posts/kewalkishang_augmentedreality-chatbots-artificialintelligence-activity-6487343493994897409-T_Zp?utm_source=linkedin_share&utm_medium=member_desktop_web"
                   target="_blank">Demo</a>
               </p>
-              <p>an AR based chatbot, integrated with google DialogFlow that simulates a
+              <p>An AR based chatbot, integrated with google DialogFlow that simulates a
                 humanoid virtual assistant that responds using actions and speech.</p>
             </div>
           </li>
           <li>
             <div>
               <p>
-                <b>ArGO</b> | <a href="https://play.google.com/store/apps/details?id=com.OnlyKK.ARgo"
+                <b>ArGO</b> | Unity, ARCore | <a href="https://play.google.com/store/apps/details?id=com.OnlyKK.ARgo"
                   target="_blank">Play Store</a>
               </p>
-              <p>an AR based building construction application developed for early prototyping. </p>
+              <p>An AR based building construction application developed for early prototyping. </p>
             </div>
           </li>
           <li>
             <div>
               <p>
-                <b>VR SUITE</b> | <a href="https://play.google.com/store/apps/details?id=com.OnlyKK.BALLBALANCE"
+                <b>VR SUITE</b> | Unity, Google Cardboard | <a href="https://play.google.com/store/apps/details?id=com.OnlyKK.BALLBALANCE"
                   target="_blank">Play Store</a>
               </p>
               <p>An immersive VR game room with multiple arcade games,(Zombie attack, ball
@@ -554,31 +583,31 @@
           <li>
             <div>
               <p>
-                <b>Train Simulator</b>
+                <b>Train Simulator</b> | Unity 
               </p>
-              <p>a realistic metro simulator built to train metro drivers.</p>
+              <p>A realistic metro simulator built to train metro drivers.</p>
             </div>
           </li>
 
           <li>
             <div>
               <p>
-                <b>Customer Behavior Recognition in Retail Store from Surveillance Camera</b>
+                <b>Customer Behavior Recognition in Retail Store from Surveillance Camera</b> | TensorFlow, Python
               </p>
               <p>Successfully developed and implemented a machine learning model that can recognize and
-                differentiate different human activities in a retail store for product or anomaly analysis</p>
+                differentiate different human activities in a retail store for product or anomaly analysis.</p>
             </div>
           </li>
           <li>
             <div>
               <p>
-                <b>Geometry3D</b> | <a href="https://play.google.com/store/apps/details?id=com.onlykk.geometry3d"
+                <b>Geometry3D</b> | Unity, ARCore | <a href="https://play.google.com/store/apps/details?id=com.onlykk.geometry3d"
                   target="_blank">Play Store</a> , <a
                   href="https://www.linkedin.com/posts/kewalkishang_education-unity3d-augmentedreality-activity-6702256660037156864-YVn3?utm_source=linkedin_share&utm_medium=member_desktop_web"
                   target="_blank">Demo</a>
               </p>
               <p>Successfully developed and implemented a machine learning model that can recognize and
-                differentiate different human activities in a retail store for product or anomaly analysis</p>
+                differentiate different human activities in a retail store for product or anomaly analysis.</p>
             </div>
           </li>
         </ul>
@@ -593,7 +622,7 @@
           Hey! I am Kewal.
         </p>
         <p>
-          I am currently pursuing my masters in Computer Science at Northeastern. I bring with me over 4 years of valuable development experience in the technology field.
+          I am currently pursuing my masters in Computer Science at Northeastern and I bring with me over 4 years of valuable development experience in the technology field, across various domains and platforms.
         </p>
 
         <p>
